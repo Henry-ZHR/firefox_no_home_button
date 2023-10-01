@@ -20,8 +20,10 @@ public class MainHook implements IXposedHookLoadPackage {
           protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
             final Object action = param.args[0];
             final Object listener = XposedHelpers.findField(action.getClass(), "listener").get(action);
+            final String name = listener.getClass().getName();
             // org.mozilla.fenix.browser.BrowserFragment$initializeUI$homeAction$1
-            if (listener.getClass().getName().contains("homeAction")) {
+            // org.mozilla.fenix.browser.BrowserFragment$initializeUI$leadingAction$2
+            if (name.contains("homeAction") || name.contains("leadingAction")) {
               param.setResult(null);
             }
           }

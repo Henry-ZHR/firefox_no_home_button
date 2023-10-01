@@ -4,14 +4,14 @@ plugins {
 
 android {
     namespace 'moe.henry_zhr.firefox_no_home_button'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "moe.henry_zhr.firefox_no_home_button"
         minSdk 21
-        targetSdk 33
-        versionCode 3
-        versionName "3"
+        targetSdk 34
+        versionCode 4
+        versionName "4"
     }
 
     buildTypes {
