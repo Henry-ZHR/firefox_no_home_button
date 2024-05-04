@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Firefox no home button</string>
+    <string name="app_name">Firefox No Home Button</string>
     <string name="xposed_description">Prevent Firefox from showing home button in the toolbar</string>
 </resources>
