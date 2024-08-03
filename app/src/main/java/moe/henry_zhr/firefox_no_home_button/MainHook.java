@@ -2,36 +2,30 @@ package moe.henry_zhr.firefox_no_home_button;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-
-import java.lang.reflect.Field;
-import java.util.Collections;
-import java.util.Set;
-import java.util.WeakHashMap;
-
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
+import java.lang.reflect.Field;
+import java.util.Collections;
+import java.util.Set;
+import java.util.WeakHashMap;
 
 public class MainHook implements IXposedHookLoadPackage {
-  private static final String[] HOME_DRAWABLE_NAMES = {
-      "mozac_ic_home",
-      "mozac_ic_home_24"
-  };
+  private static final String[] HOME_DRAWABLE_NAMES = {"mozac_ic_home", "mozac_ic_home_24"};
 
   @Override
   public void handleLoadPackage(LoadPackageParam lpparam) {
-    final Set<Drawable> drawables = Collections.synchronizedSet(
-        Collections.newSetFromMap(new WeakHashMap<>())
-    );
+    final Set<Drawable> drawables = Collections.newSetFromMap(new WeakHashMap<>());
 
     XposedHelpers.findAndHookMethod(
-        "androidx.appcompat.content.res.AppCompatResources",
+        "androidx.appcompat.widget.ResourceManagerInternal",
         lpparam.classLoader,
         "getDrawable",
         Context.class,
         int.class,
+        boolean.class,
         new XC_MethodHook() {
           @Override
           protected void afterHookedMethod(MethodHookParam param) {
@@ -44,13 +38,10 @@ public class MainHook implements IXposedHookLoadPackage {
               }
             }
           }
-        }
-    );
+        });
     XposedBridge.hookAllMethods(
         XposedHelpers.findClass(
-            "mozilla.components.browser.toolbar.BrowserToolbar",
-            lpparam.classLoader
-        ),
+            "mozilla.components.browser.toolbar.BrowserToolbar", lpparam.classLoader),
         "addNavigationAction",
         new XC_MethodHook() {
           @Override
@@ -61,7 +52,6 @@ public class MainHook implements IXposedHookLoadPackage {
               param.setResult(null);
             }
           }
-        }
-    );
+        });
   }
 }

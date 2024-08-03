@@ -10,8 +10,8 @@ android {
         applicationId "moe.henry_zhr.firefox_no_home_button"
         minSdk 21
         targetSdk 34
-        versionCode 5
-        versionName "5"
+        versionCode 6
+        versionName "6"
     }
 
     buildTypes {
